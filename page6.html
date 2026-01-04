@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Final Surprise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Poppins',sans-serif;
+  color:white;
+}
+
+#startScreen{
+  text-align:center;
+}
+
+#startBtn{
+  padding:18px 45px;
+  font-size:20px;
+  border:none;
+  border-radius:60px;
+  background:linear-gradient(90deg,#ff512f,#f09819);
+  cursor:pointer;
+  animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 15px #ff512f;}
+  50%{box-shadow:0 0 35px #f09819;}
+  100%{box-shadow:0 0 15px #ff512f;}
+}
+
+#videoBox{
+  display:none;
+  text-align:center;
+}
+
+video{
+  width:90%;
+  max-width:700px;
+  border-radius:15px;
+  box-shadow:0 0 40px rgba(255,255,255,0.3);
+}
+
+.musicBtn{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="startScreen">
+  <h1>Oye mere papa ke bade Damad 💖<br>
+  Pahale reveal pe click kariyega uske bad back aana<br> Phir last one pe click kariyega<br> Thik hai darling mere </h1>
+  <button id="startBtn">Reveal 🎬</button>
+<a href="page7.html">
+    <button class="next-btn">last one 🎁</button>
+  </a>
+
+</div>
+
+<div id="videoBox">
+  <video id="video" controls>
+    <source src="surprise.mp4" type="video/mp4">
+  </video>
+  <br>
+  <button class="musicBtn" onclick="toggleMusic()">🔊 Music</button>
+</div>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+const btn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
+const videoBox = document.getElementById("videoBox");
+const music = document.getElementById("bgMusic");
+
+btn.onclick = () => {
+  startScreen.style.display = "none";
+  videoBox.style.display = "block";
+  music.play();
+};
+
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+</script>
+
+</body>
+</html>

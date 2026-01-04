@@ -1,0 +1,82 @@
+<!-- Page 2: message.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Birthday Message</title>
+<style>
+  body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#000,#1a1a1a);
+    font-family:'Poppins',sans-serif;
+    color:#fff;
+    overflow:hidden;
+  }
+  .container{
+    text-align:center;
+    width:90%;
+    max-width:700px;
+  }
+  .typewriter{
+    font-size:22px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    border-right:3px solid #ff5fa2;
+    display:inline-block;
+    overflow:hidden;
+  }
+  .btn{
+    margin-top:40px;
+    background:#ff5fa2;
+    padding:12px 24px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+    color:#fff;
+    transition:0.3s;
+  }
+  .btn:hover{transform:scale(1.05);background:#ff7fbb;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 style="font-size:34px;color:#ff7fbb;margin-bottom:20px;">A Little Birthday Note For You 💌</h1>
+
+  <div id="tw" class="typewriter"></div>
+
+  <button class="btn" onclick="nextPage()">Next → Surprise Page</button>
+</div>
+
+<script>
+// Typewriter message
+const message = `Hey Buggu,
+
+Today is not just your birthday — it's your day.
+The world is lucky to have someone like you.
+You’re cute, annoying, funny, irritating, caring… all in one combo pack.
+And honestly, I wouldn’t trade any of it.
+
+Thank you for existing. 💗`;
+
+let i = 0;
+function type(){
+  if(i < message.length){
+    document.getElementById('tw').textContent += message.charAt(i);
+    i++;
+    setTimeout(type, 40);
+  }
+}
+type();
+
+function nextPage(){ window.location.href = 'memory.html'; }
+</script>
+
+</body>
+</html>

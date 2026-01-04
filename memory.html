@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Page 3 – Special Memories</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<style>
+    :root{ --bg:#060606; --card-bg:#fff; --rose:#b76e79; }
+    *{box-sizing:border-box}
+    body{
+        margin:0;
+        background:linear-gradient(180deg,#050505,#0b0b0b);
+        font-family:'Poppins',sans-serif;
+        overflow:hidden;
+        color:#fff;
+    }
+
+    #wall{position:relative;width:100vw;height:100vh;}
+
+    /* Polaroid Card */
+    .polaroid{
+        position:absolute;
+        width:170px;
+        height:240px;
+        perspective:1200px;
+        cursor:grab;
+    }
+
+    .card-inner{
+        position:relative;
+        width:100%;
+        height:100%;
+        transform-style:preserve-3d;
+        transition:transform 700ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    .polaroid.flipped .card-inner{ transform:rotateY(180deg); }
+
+    .face{
+        position:absolute;
+        inset:0;
+        backface-visibility:hidden;
+        border-radius:8px;
+        overflow:hidden;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .front{
+        background:#fff;
+        padding:12px 10px;
+    }
+
+    .front img{
+        width:100%;
+        height:160px;
+        object-fit:cover;
+        border-radius:6px;
+        box-shadow:0 8px 18px rgba(0,0,0,0.45);
+    }
+
+    .caption{
+        margin-top:8px;
+        font-size:13px;
+        color:#222;
+        text-align:center;
+    }
+
+    .back{
+        background:#111;
+        transform:rotateY(180deg);
+        padding:18px;
+        color:#eee;
+        text-align:center;
+    }
+
+    .back .big-text{
+        font-size:16px;
+        margin-bottom:10px;
+    }
+
+    .back .tag{ font-size:12px; opacity:0.7; }
+
+    /* Floating Gold NEXT Button (A) */
+    .next-btn {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #ffd700, #ffb300);
+        color: #000;
+        border-radius: 40px;
+        text-decoration: none;
+        box-shadow: 
+            0 0 18px rgba(255, 215, 0, 0.7),
+            0 0 35px rgba(255, 215, 0, 0.9);
+        animation: glowPulse 1.7s infinite alternate ease-in-out;
+        z-index: 9999;
+    }
+
+    @keyframes glowPulse {
+        0% { 
+            box-shadow: 
+                0 0 10px rgba(255, 215, 0, 0.5),
+                0 0 25px rgba(255, 215, 0, 0.6);
+            transform: scale(1);
+        }
+        100% { 
+            box-shadow: 
+                0 0 18px rgba(255, 215, 0, 0.8),
+                0 0 45px rgba(255, 215, 0, 1);
+            transform: scale(1.07);
+        }
+    }
+
+    /* Confetti canvas */
+    #confettiCanvas{
+        position:fixed;
+        inset:0;
+        pointer-events:none;
+        z-index:200;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- WALL -->
+<section id="wall"></section>
+
+<!-- NEXT PAGE BUTTON -->
+<a href="page4.html" class="next-btn">Next ➜</a>
+
+<!-- Confetti -->
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+// ------------------ DATA ------------------
+const MEMORIES = [
+  { src: 'images/photo1.jpg', caption: 'Nam sune to duniya maun ham hi hai bhojpuriya don', tag: 'tohare me base raja hamro parnva ho' },
+  { src: 'images/photo2.jpg', caption: 'Combination Of Gadha🐴 With Dimag🧠', tag: 'hay mai kya karu ram mujhe budhdha mil gaya' },
+  { src: 'images/photo3.jpg', caption: 'Not always but sometime I am happy with and by you', tag: 'my verma ji' },
+  { src: 'images/photo4.jpg', caption: 'You are my baby baby dolly', tag: 'darpok lol' },
+  { src: 'images/photo5.jpg', caption:'💙 I LOVE YOU 💙', tag: 'mubarak ho tumko ye janmdin tumhara,sada mere sath raho tum ye duaa hai hamara' }
+];
+
+const wall = document.getElementById('wall');
+
+function rand(min,max){ return Math.random()*(max-min)+min; }
+
+// ------------------ CREATE CARDS ------------------
+function createCard(item,i){
+    const w = document.createElement('div');
+    w.className = 'polaroid';
+    w.style.left = rand(4,80) + 'vw';
+    w.style.top = rand(8,78) + 'vh';
+    w.style.zIndex = 10+i;
+
+    const inner = document.createElement('div');
+    inner.className='card-inner';
+
+    const front = document.createElement('div');
+    front.className='face front';
+
+    const img = document.createElement('img');
+    img.src=item.src;
+    img.alt=item.caption;
+    front.appendChild(img);
+
+    const cap = document.createElement('div');
+    cap.className='caption';
+    cap.textContent=item.caption;
+    front.appendChild(cap);
+
+    const back = document.createElement('div');
+    back.className='face back';
+
+    const big=document.createElement('div');
+    big.className='big-text';
+    big.textContent=item.caption;
+    back.appendChild(big);
+
+    const tag=document.createElement('div');
+    tag.className='tag';
+    tag.textContent=item.tag;
+    back.appendChild(tag);
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    w.appendChild(inner);
+
+    // Flip on click
+    w.addEventListener('click', ()=>{ if(!w.__dragging) w.classList.toggle('flipped'); });
+
+    // Drag Logic
+    let drag=false, sx=0, sy=0, ox=0, oy=0;
+
+    w.addEventListener('pointerdown',(ev)=>{
+        drag=true;
+        w.__dragging=false;
+        w.setPointerCapture(ev.pointerId);
+        sx=ev.clientX; sy=ev.clientY;
+        ox=parseFloat(w.style.left); oy=parseFloat(w.style.top);
+        w.style.transition='none';
+    });
+
+    window.addEventListener('pointermove',(ev)=>{
+        if(!drag) return;
+        const dx=ev.clientX-sx;
+        const dy=ev.clientY-sy;
+        const nx=ox+dx;
+        const ny=oy+dy;
+        w.style.left=nx+'px';
+        w.style.top=ny+'px';
+        if(Math.abs(dx)+Math.abs(dy)>6) w.__dragging=true;
+    });
+
+    window.addEventListener('pointerup',(ev)=>{
+        drag=false;
+        try{ w.releasePointerCapture(ev.pointerId); }catch(e){}
+        w.style.transition='transform 700ms cubic-bezier(.2,.8,.2,1)';
+    });
+
+    wall.appendChild(w);
+}
+
+function render(){ wall.innerHTML=''; MEMORIES.forEach((m,i)=>createCard(m,i)); }
+render();
+
+
+// ------------------ CONFETTI ------------------
+const confettiCanvas=document.getElementById('confettiCanvas');
+const ctx=confettiCanvas.getContext('2d');
+
+function resize(){ confettiCanvas.width=innerWidth; confettiCanvas.height=innerHeight; }
+window.addEventListener('resize',resize); resize();
+
+let confetti=[];
+
+function spawn(n){
+    for(let i=0;i<n;i++){
+        confetti.push({
+            x:rand(0,confettiCanvas.width),
+            y:rand(-100,0),
+            vx:rand(-2,2),
+            vy:rand(2,6),
+            s:rand(5,10),
+            life:rand(80,150),
+            hue:rand(330,360)
+        });
+    }
+}
+
+function animate(){
+    requestAnimationFrame(animate);
+    ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+
+    confetti.forEach((p,i)=>{
+        p.x+=p.vx;
+        p.y+=p.vy;
+        p.vy+=0.05;
+        p.life--;
+
+        ctx.fillStyle=`hsl(${p.hue} 70% 70%)`;
+        ctx.fillRect(p.x,p.y,p.s,p.s);
+
+        if(p.life<=0 || p.y>confettiCanvas.height+50){
+            confetti.splice(i,1);
+        }
+    });
+}
+
+spawn(120);
+setInterval(()=>spawn(3),150);
+animate();
+
+</script>
+
+</body>
+</html>

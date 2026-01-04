@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Surprise</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #000;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif;
+        color: #fff;
+    }
+
+    /* Spotlight Glow */
+    .center-glow {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at center, rgba(255,255,255,0.12), rgba(0,0,0,0.98));
+        pointer-events: none;
+    }
+
+    /* Typewriter Text */
+    .typewriter {
+        position: absolute;
+        top: 40%;
+        width: 100%;
+        text-align: center;
+        font-size: 32px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid rgba(255,255,255,0.6);
+        width: 0;
+        margin: 0 auto;
+        animation: typing 4s steps(35) forwards, blink .7s infinite;
+    }
+
+    @keyframes typing {
+        from { width: 0; }
+        to { width: 85%; }
+    }
+    @keyframes blink {
+        0% { border-color: transparent; }
+        50% { border-color: rgba(255,255,255,0.6); }
+        100% { border-color: transparent; }
+    }
+
+    /* Reveal Button */
+    .reveal-btn {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 14px 22px;
+        font-size: 20px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 12px;
+        color: white;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        display: none;
+        transition: 0.4s;
+    }
+    .reveal-btn:hover {
+        background: rgba(255,255,255,0.25);
+        transform: translateX(-50%) scale(1.06);
+    }
+
+    /* Heart Burst */
+    .heart {
+        position: fixed;
+        font-size: 20px;
+        animation: burst 2s ease-out forwards;
+        pointer-events: none;
+    }
+
+    @keyframes burst {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+        100% { transform: translate(var(--x), var(--y)) scale(1.8); opacity: 0; }
+    }
+
+    /* Floating Particles */
+    .particle {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.5;
+        animation: floatUp 6s linear infinite;
+    }
+    @keyframes floatUp {
+        from { transform: translateY(0); opacity: 0.4; }
+        to { transform: translateY(-120vh); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+<div class="center-glow"></div>
+
+<div id="typeText" class="typewriter">
+    A special surprise is waiting for you… mere lol
+</div>
+
+<button id="revealBtn" class="reveal-btn" onclick="goNext()">
+    Click to Open Your Surprise verma ji
+</button>
+
+<script>
+// Show button after typewriter finishes
+setTimeout(() => {
+    document.getElementById("revealBtn").style.display = "block";
+}, 4200);
+
+/* Next page */
+function goNext() {
+    burstHearts();
+    setTimeout(() => {
+        window.location.href = "page6.html";
+    }, 1200);
+}
+
+/* Heart Burst Animation */
+function burstHearts() {
+    for (let i = 0; i < 22; i++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💗";
+
+        const angle = Math.random() * 360;
+        const distance = 120 + Math.random() * 80;
+
+        h.style.left = "50%";
+        h.style.top = "50%";
+        h.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+        h.style.setProperty("--y", `${Math.sin(angle) * distance}px`);
+
+        document.body.appendChild(h);
+
+        setTimeout(() => h.remove(), 2000);
+    }
+}
+
+/* Floating particles */
+function createParticle() {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.top = "100vh";
+    p.style.animationDuration = 4 + Math.random() * 4 + "s";
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 7000);
+}
+setInterval(createParticle, 200);
+</script>
+
+</body>
+</html>

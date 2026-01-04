@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Page 5 – Message</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  font-family:'Poppins',sans-serif;
+  color:white;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  animation:fadeIn 1.5s ease;
+}
+
+h1{
+  font-size:2.4rem;
+  margin-bottom:20px;
+}
+
+p{
+  font-size:1.2rem;
+  opacity:0.9;
+  margin-bottom:40px;
+}
+
+.next-btn{
+  padding:15px 40px;
+  font-size:18px;
+  border:none;
+  border-radius:50px;
+  background:linear-gradient(90deg,#ff4ecd,#ffb86c);
+  color:#000;
+  cursor:pointer;
+  box-shadow:0 0 20px rgba(255,78,205,0.7);
+  animation:glow 1.5s infinite alternate;
+}
+
+.next-btn:hover{
+  transform:scale(1.1);
+}
+
+@keyframes glow{
+  from{box-shadow:0 0 15px #ff4ecd;}
+  to{box-shadow:0 0 35px #ffb86c;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>OYE MERE LOL aage ke page me dekhiye maja aayega … 💖</h1>
+  <p>You mean more to me than words can explain.</p>
+
+  <a href="page6.html">
+    <button class="next-btn">Go to heaven 🎁</button>
+  </a>
+</div>
+</body>
+</html>

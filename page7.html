@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just for You ❤️</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:radial-gradient(circle at top,#1a1a1a,#000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Poppins, sans-serif;
+  color:white;
+}
+
+.container{
+  text-align:center;
+  animation:fade 2s ease;
+}
+
+h1{
+  font-size:2.4rem;
+}
+
+p{
+  opacity:0.8;
+  margin-top:10px;
+}
+
+.heart{
+  font-size:90px;
+  animation:beat 1.2s infinite;
+}
+
+.credit{
+  margin-top:30px;
+  font-size:14px;
+  opacity:0.6;
+}
+
+@keyframes beat{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="heart">❤️</div>
+    <h1>This is the small suprise for you my Darling<br>Itana mehnat bas aapke liye ki hu darling <br> Agar achcha nahi laga hoga to samjh lena<br>Aapki sakal kharab hai</h1>
+    <p>Every click had a feeling behind it my love.</p>
+    <div class="credit">— Made with love by your darling</div>
+  </div>
+</body>
+</html>

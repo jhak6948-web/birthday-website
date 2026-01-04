@@ -1,0 +1,82 @@
+<!-- This file is PAGE 1: welcome.html -->
+<!-- I will generate 4 pages total. Page 1, 2, 3, 4.
+     After this, you can ask me to update or modify any page. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday — Welcome</title>
+
+<script>
+(function(){
+  const PASSWORD = "Khushee@2004"; // change this
+  const userPass = prompt("Enter the secret password 💌");
+  if(userPass !== PASSWORD){
+    alert("Wrong password ❌");
+    window.location.reload();
+  }
+})();
+</script>
+
+<style>
+    body{
+        margin:0;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#000,#111,#222);
+        font-family:'Poppins',sans-serif;
+        overflow:hidden;
+    }
+
+    /* GOLD SHIMMER NAME */
+    .gold-name{
+        font-size:58px;
+        font-weight:900;
+        background:linear-gradient(135deg,#d4af37,#f7d774,#b8860b,#f4c430,#e0c068);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        animation:shine 4s infinite linear, floaty 3s ease-in-out infinite;
+        text-align:center;
+    }
+
+    @keyframes shine{
+        0%{filter:brightness(0.8)}
+        50%{filter:brightness(1.4)}
+        100%{filter:brightness(0.9)}
+    }
+
+    @keyframes floaty{
+        0%{transform:translateY(0)}
+        50%{transform:translateY(-12px)}
+        100%{transform:translateY(0)}
+    }
+
+    .enter-btn{
+        margin-top:32px;
+        padding:14px 28px;
+        font-size:18px;
+        border:none;
+        background:#d4af37;
+        color:#000;
+        border-radius:10px;
+        cursor:pointer;
+        font-weight:600;
+        transition:0.3s;
+    }
+
+    .enter-btn:hover{
+        background:#f5d56a;
+    }
+</style>
+</head>
+<body>
+    <div style="text-align:center;">
+        <div class="gold-name">HAAPIEST BIRTHDAY<br>VERMA JI💛</div>
+        <button class="enter-btn" onclick="location.href='message.html'">Enter</button>
+    </div>
+</body>
+</html>
